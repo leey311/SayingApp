@@ -1,8 +1,8 @@
 package com.ll.service;
 
+import com.ll.entity.SayingDto;
 import com.ll.repository.MemoryRepository;
 import com.ll.repository.Repository;
-
 import java.util.Scanner;
 
 public class AppService {
@@ -52,6 +52,8 @@ public class AppService {
     }
 
     public void list() {
-        repository.findAll();
+        for(SayingDto a : repository.findAll()){
+            System.out.println(a.toString());
+        }
     }
 }

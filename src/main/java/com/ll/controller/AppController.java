@@ -13,9 +13,8 @@ public class AppController {
     }
 
     public void start(){
-        System.out.print("==SAYING APP==\n1:regist 2:delete 3:modify 4:list )");
-
         while(true){
+            System.out.print("==SAYING APP==\n1:regist 2:delete 3:modify 4:list )");
             String start = scanner.nextLine();
             switch (start){
                 case "1":

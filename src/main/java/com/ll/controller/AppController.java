@@ -11,10 +11,9 @@ public class AppController {
     public AppController(){
         this.appService = new AppService();
     }
-
     public void start(){
         while(true){
-            System.out.print("==SAYING APP==\n1:regist 2:delete 3:modify 4:list )");
+            System.out.print("==명언 앱==\n1:등록 2:삭제 3:수정 4:목록) ");
             String start = scanner.nextLine();
             switch (start){
                 case "1":

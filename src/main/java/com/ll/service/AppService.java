@@ -16,23 +16,23 @@ public class AppService {
         System.out.print("SAYING) ");
         String say = scanner.nextLine();
 
-        System.out.println(repository.registApp(name,say) + " regist complete.");
+        System.out.println(repository.registApp(name,say) + " 번 명언이 등록되었습니다.");
     }
 
     public String delete(Scanner scanner) {
         int del = choose(scanner);
         if(check(del)){
             repository.deleteApp(del);
-            return "delete complete";
+            return "삭제되었습니다";
         }
-        return "not found.";
+        return "존재하지 않습니다.";
     }
 
     private boolean check(int del){
         return repository.checkEntity(del);
     }
     private int choose(Scanner scanner){
-        System.out.print("ID) ") ;
+        System.out.print("번호) ") ;
         int choose = scanner.nextInt();
         scanner.nextLine();
         return choose;
@@ -41,14 +41,14 @@ public class AppService {
     public String modify(Scanner scanner) {
         int del = choose(scanner);
         if(check(del)){
-            System.out.print("NAME) ");
+            System.out.print("이름) ");
             String name = scanner.nextLine();
-            System.out.print("SAYING) ");
+            System.out.print("명언) ");
             String say = scanner.nextLine();
             repository.modifyApp(del, name, say);
-            return "modify complete";
+            return "수정 완료";
         }
-        return "not found.";
+        return "존재하지 않습니다.";
     }
 
     public void list() {

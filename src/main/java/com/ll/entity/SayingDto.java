@@ -10,6 +10,16 @@ public class SayingDto {
         this.name = name;
         this.say = say;
     }
+    public int getId(){
+        return id;
+    }
+    public String getName(){
+        return name;
+    }
+    public String getSay(){
+        return say;
+    }
+
     @Override
     public String toString(){
         return id + " / " + name + " / " + say;

@@ -1,12 +1,16 @@
 package com.ll.repository;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ll.entity.SayingDto;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class MemoryRepository implements Repository{
     private final HashMap<Integer, SayingDto> sayingHashMap;
+    private final ObjectMapper objectsMapper = new ObjectMapper();
     private int a = 0;
 
     public MemoryRepository(){
@@ -17,6 +21,11 @@ public class MemoryRepository implements Repository{
     public int registApp(String name, String say) {
         SayingDto saying = new SayingDto(++a, name, say);
         sayingHashMap.put(a, saying);
+        try {
+            saveFile("file" + a);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         return a;
     }
 
@@ -39,5 +48,9 @@ public class MemoryRepository implements Repository{
     @Override
     public ArrayList<SayingDto> findAll() {
         return new ArrayList<>(sayingHashMap.values());
+    }
+
+    private void saveFile(String fileName) throws IOException {
+        objectsMapper.writeValue(new File(fileName), sayingHashMap);
     }
 }

@@ -1,7 +1,7 @@
 package com.ll.repository;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ll.entity.SayingDto;
+import com.ll.entity.Saying;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,20 +9,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class MemoryRepository implements Repository{
-    private final HashMap<Integer, SayingDto> sayingHashMap;
+    private final HashMap<Integer, Saying> sayingHashMap = new HashMap<>();;
     private final ObjectMapper objectsMapper = new ObjectMapper();
     private int a = 0;
 
-    public MemoryRepository(){
-        sayingHashMap = new HashMap<>();
-    }
-
     @Override
     public int registApp(String name, String say) {
-        SayingDto saying = new SayingDto(++a, name, say);
+        Saying saying = new Saying(++a, name, say);
         sayingHashMap.put(a, saying);
         try {
-            saveFile("file" + a);
+            saveFile("file" + a , saying);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -41,16 +37,21 @@ public class MemoryRepository implements Repository{
 
     @Override
     public void modifyApp(int del, String name, String say) {
-        SayingDto saying = new SayingDto(del, name, say);
-        sayingHashMap.put(a,saying);
+        Saying saying = new Saying(del, name, say);
+        sayingHashMap.put(del, saying);
+        try {
+            saveFile("file" + del , saying);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
-    public ArrayList<SayingDto> findAll() {
+    public ArrayList<Saying> findAll() {
         return new ArrayList<>(sayingHashMap.values());
     }
 
-    private void saveFile(String fileName) throws IOException {
-        objectsMapper.writeValue(new File(fileName), sayingHashMap);
+    private void saveFile(String fileName, Saying saying) throws IOException {
+        objectsMapper.writeValue(new File(fileName), saying);
     }
 }

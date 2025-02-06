@@ -1,6 +1,6 @@
 package com.ll.repository;
 
-import com.ll.entity.SayingDto;
+import com.ll.entity.Saying;
 
 import java.util.ArrayList;
 
@@ -13,5 +13,5 @@ public interface Repository {
 
     void modifyApp(int del, String name, String say);
 
-    ArrayList<SayingDto> findAll();
+    ArrayList<Saying> findAll();
 }

@@ -1,6 +1,6 @@
 package com.ll.service;
 
-import com.ll.entity.SayingDto;
+import com.ll.entity.Saying;
 import com.ll.repository.MemoryRepository;
 import com.ll.repository.Repository;
 import java.util.Scanner;
@@ -11,9 +11,9 @@ public class AppService {
         this.repository = new MemoryRepository();
     }
     public void regist(Scanner scanner) {
-        System.out.print("NAME) ");
+        System.out.print("이름) ");
         String name = scanner.nextLine();
-        System.out.print("SAYING) ");
+        System.out.print("명언) ");
         String say = scanner.nextLine();
 
         System.out.println(repository.registApp(name,say) + " 번 명언이 등록되었습니다.");
@@ -52,8 +52,8 @@ public class AppService {
     }
 
     public void list() {
-        for(SayingDto a : repository.findAll()){
-            System.out.println(a.toString());
+        for(Saying a : repository.findAll()){
+            System.out.println(a);
         }
     }
 }

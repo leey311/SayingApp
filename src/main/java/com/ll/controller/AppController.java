@@ -2,6 +2,7 @@ package com.ll.controller;
 
 import com.ll.service.AppService;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class AppController {
@@ -11,9 +12,9 @@ public class AppController {
     public AppController(){
         this.appService = new AppService();
     }
-    public void start(){
+    public void start() throws IOException {
         while(true){
-            System.out.print("==명언 앱==\n1:등록 2:삭제 3:수정 4:목록) ");
+            System.out.print("==명언 앱==\n1:등록 2:삭제 3:수정 4:목록 5:빌드 6:검색) ");
             String start = scanner.nextLine();
             switch (start){
                 case "1":
@@ -27,6 +28,12 @@ public class AppController {
                     break;
                 case "4":
                     appService.list();
+                    break;
+                case "5":
+                    appService.build();
+                    break;
+                case "6":
+                    appService.searchSaying(scanner);
                     break;
             }
         }

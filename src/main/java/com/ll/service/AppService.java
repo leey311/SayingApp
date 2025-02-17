@@ -3,7 +3,11 @@ package com.ll.service;
 import com.ll.entity.Saying;
 import com.ll.repository.MemoryRepository;
 import com.ll.repository.Repository;
+
+import java.io.IOException;
+import java.util.List;
 import java.util.Scanner;
+
 
 public class AppService {
     private final Repository repository;
@@ -18,8 +22,7 @@ public class AppService {
 
         System.out.println(repository.registApp(name,say) + " 번 명언이 등록되었습니다.");
     }
-
-    public String delete(Scanner scanner) {
+    public String delete(Scanner scanner) throws IOException {
         int del = choose(scanner);
         if(check(del)){
             repository.deleteApp(del);
@@ -27,7 +30,6 @@ public class AppService {
         }
         return "존재하지 않습니다.";
     }
-
     private boolean check(int del){
         return repository.checkEntity(del);
     }
@@ -37,7 +39,6 @@ public class AppService {
         scanner.nextLine();
         return choose;
     }
-
     public String modify(Scanner scanner) {
         int del = choose(scanner);
         if(check(del)){
@@ -50,10 +51,21 @@ public class AppService {
         }
         return "존재하지 않습니다.";
     }
-
     public void list() {
         for(Saying a : repository.findAll()){
             System.out.println(a);
+        }
+    }
+    public void build() throws IOException {
+        repository.build();
+    }
+    public void searchSaying(Scanner scanner){
+        System.out.print("찾으시는 단어를 입력해주세요) ");
+        String term = scanner.nextLine();
+        List<Saying> searchList = repository.search(term);
+
+        for (Saying i : searchList){
+            System.out.println(i);
         }
     }
 }

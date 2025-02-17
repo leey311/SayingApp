@@ -11,7 +11,6 @@ public class Saying {
         this.name = name;
         this.say = say;
     }
-
     public String getName() {
         return name;
     }
@@ -21,7 +20,6 @@ public class Saying {
     public int getId() {
         return id;
     }
-
     @Override
     public String toString(){
         return id + " / " + name + " / " + say;

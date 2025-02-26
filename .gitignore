@@ -189,4 +189,6 @@ gradlew
 gradlew.bat
 gradle
 db
+/src/main/resources
+/src/main/generated
 # End of https://www.toptal.com/developers/gitignore/api/intellij,java

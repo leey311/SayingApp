@@ -188,4 +188,5 @@ build.gradle
 gradlew
 gradlew.bat
 gradle
+db
 # End of https://www.toptal.com/developers/gitignore/api/intellij,java

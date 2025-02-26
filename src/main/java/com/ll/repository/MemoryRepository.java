@@ -2,7 +2,6 @@ package com.ll.repository;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ll.entity.Saying;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -20,16 +19,12 @@ public class MemoryRepository implements Repository{
     public int registApp(String name, String say) {
         Saying saying = new Saying(++a, name, say);
         sayingHashMap.put(a, saying);
-        try {
-            saveFile(""+ a , saying);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        saveFile("" + a, saying);
         return a;
     }
 
     @Override
-    public void deleteApp(int a) throws IOException {
+    public void deleteApp(int a) {
         sayingHashMap.remove(a);
         deleteFile("" + a);
     }
@@ -40,43 +35,52 @@ public class MemoryRepository implements Repository{
     }
 
     @Override
-    public void modifyApp(int del, String name, String say) {
-        Saying saying = new Saying(del, name, say);
-        sayingHashMap.put(del, saying);
-        try {
-            saveFile("" + del , saying);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    public void modifyApp(int mod, String name, String say) {
+        Saying saying = new Saying(mod, name, say);
+        sayingHashMap.put(mod, saying);
+        saveFile("" + mod, saying);
     }
 
     @Override
-    public ArrayList<Saying> findAll() {
+    public List<Saying> findAll() {
         return new ArrayList<>(sayingHashMap.values());
     }
 
     @Override
-    public void build() throws IOException {
-        objectsMapper.writeValue(new File("data"), findAll());
+    public void build() {
+        try {
+            objectsMapper.writeValue(new File("data"), findAll());
+        }catch (IOException e){
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public List<Saying> search(String term){
         List<Saying> searchList = new ArrayList<>();
         for (Saying i : findAll()){
-            if (i.getSay().contains(term) || i.getName().contains(term)){
+            if (i.say().contains(term) || i.name().contains(term)){
                 searchList.add(i);
             }
         }
         return searchList;
     }
 
-    private void saveFile(String fileName, Saying saying) throws IOException {
-        String formattedFileName = String.format("db/%s",fileName);
-        objectsMapper.writeValue(new File(formattedFileName), saying);
+    private void saveFile(String fileName, Saying saying) {
+        try {
+            String formattedFileName = String.format("db/%s",fileName);
+            objectsMapper.writeValue(new File(formattedFileName), saying);
+        }catch (IOException e){
+            throw new RuntimeException(e);
+        }
     }
-    private void deleteFile(String fileName) throws IOException {
-        String formattedFileName = String.format("db/%s",fileName);
-        Files.deleteIfExists(Path.of(formattedFileName));
+    private void deleteFile(String fileName) {
+        try {
+            String formattedFileName = String.format("db/%s",fileName);
+            Files.deleteIfExists(Path.of(formattedFileName));
+        }catch (IOException e){
+            throw new RuntimeException(e);
+        }
     }
+
 }

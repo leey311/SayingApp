@@ -1,32 +1,33 @@
 package com.ll.repository;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ll.entity.Saying;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import com.ll.strategy.FileStrategy;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class MemoryRepository implements Repository{
-    private final HashMap<Integer, Saying> sayingHashMap = new HashMap<>();;
-    private final ObjectMapper objectsMapper = new ObjectMapper();
+    private final HashMap<Integer, Saying> sayingHashMap = new HashMap<>();
+    private final FileStrategy fileStrategy;
     private int a = 0;
+
+    public MemoryRepository(FileStrategy fileStrategy){
+        this.fileStrategy = fileStrategy;
+    }
 
     @Override
     public int registApp(String name, String say) {
         Saying saying = new Saying(++a, name, say);
         sayingHashMap.put(a, saying);
-        saveFile("" + a, saying);
+        this.fileStrategy.saveFile("" + a, saying);
         return a;
     }
 
     @Override
     public void deleteApp(int a) {
         sayingHashMap.remove(a);
-        deleteFile("" + a);
+        this.fileStrategy.deleteFile("" + a);
     }
 
     @Override
@@ -38,7 +39,7 @@ public class MemoryRepository implements Repository{
     public void modifyApp(int mod, String name, String say) {
         Saying saying = new Saying(mod, name, say);
         sayingHashMap.put(mod, saying);
-        saveFile("" + mod, saying);
+        this.fileStrategy.saveFile("" + mod, saying);
     }
 
     @Override
@@ -48,11 +49,7 @@ public class MemoryRepository implements Repository{
 
     @Override
     public void build() {
-        try {
-            objectsMapper.writeValue(new File("data"), findAll());
-        }catch (IOException e){
-            throw new RuntimeException(e);
-        }
+        this.fileStrategy.saveFile("data", findAll());
     }
 
     @Override
@@ -65,22 +62,4 @@ public class MemoryRepository implements Repository{
         }
         return searchList;
     }
-
-    private void saveFile(String fileName, Saying saying) {
-        try {
-            String formattedFileName = String.format("db/%s",fileName);
-            objectsMapper.writeValue(new File(formattedFileName), saying);
-        }catch (IOException e){
-            throw new RuntimeException(e);
-        }
-    }
-    private void deleteFile(String fileName) {
-        try {
-            String formattedFileName = String.format("db/%s",fileName);
-            Files.deleteIfExists(Path.of(formattedFileName));
-        }catch (IOException e){
-            throw new RuntimeException(e);
-        }
-    }
-
 }

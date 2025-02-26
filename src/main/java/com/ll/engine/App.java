@@ -1,4 +1,4 @@
-package com.ll;
+package com.ll.engine;
 
 import com.ll.controller.Controller;
 import java.util.Scanner;
@@ -11,9 +11,10 @@ public class App {
     }
 
     public void run(){
+        boolean isRunning = true;
         Scanner scanner = new Scanner(System.in);
-        while(true){
-            System.out.print("==명언 앱==\n1:등록 2:삭제 3:수정 4:목록 5:빌드 6:검색) ");
+        while(isRunning){
+            System.out.print("==명언 앱==\n1:등록 2:삭제 3:수정 4:목록 5:검색) ");
             String start = scanner.nextLine();
             switch (start){
                 case "1":
@@ -29,10 +30,11 @@ public class App {
                     controller.list();
                     break;
                 case "5":
-                    controller.build();
-                    break;
-                case "6":
                     controller.searchSaying(scanner);
+                    break;
+                default:
+                    controller.build();
+                    isRunning = false;
                     break;
             }
         }

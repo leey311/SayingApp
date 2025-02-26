@@ -1,6 +1,8 @@
-package com.ll;
+package com.ll.engine;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ll.controller.AppController;
+import com.ll.strategy.FileStrategy;
 import com.ll.repository.MemoryRepository;
 import com.ll.repository.Repository;
 import com.ll.service.AppService;
@@ -14,6 +16,12 @@ public class SayingAppFactory {
         return new AppService(createRepository());
     }
     public Repository createRepository() {
-        return new MemoryRepository();
+        return new MemoryRepository(createFileStrategy());
+    }
+    public FileStrategy createFileStrategy() {
+        return new FileStrategy(createObjectMapper());
+    }
+    public ObjectMapper createObjectMapper() {
+        return new ObjectMapper();
     }
 }

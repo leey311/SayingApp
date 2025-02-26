@@ -76,6 +76,7 @@ public class AppController implements Controller{
     private boolean check(int del) {
         return service.check(del);
     }
+
     private String[] inputSaying(Scanner scanner){
         String[] input = new String[2];
         System.out.print("이름) ");

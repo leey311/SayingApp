@@ -11,6 +11,10 @@ public class AppService implements Service{
 
     public AppService(Repository repository){
         this.repository = repository;
+        for (int i = 1; i < 6; i++) {
+            this.repository.registApp("name " + i, "say " + i);
+            System.out.println(i + " 번째 명언 등록 완료");
+        }
     }
 
     @Override

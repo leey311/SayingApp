@@ -5,14 +5,15 @@ import java.util.Scanner;
 
 public class App {
     private final Controller controller;
+    private final Scanner scanner;
 
-    public App(Controller controller){
+    public App(Controller controller, Scanner scanner){
         this.controller = controller;
+        this.scanner = scanner;
     }
 
     public void run(){
         boolean isRunning = true;
-        Scanner scanner = new Scanner(System.in);
         while(isRunning){
             System.out.print("==명언 앱==\n1:등록 2:삭제 3:수정 4:목록 5:검색) ");
             String start = scanner.nextLine();

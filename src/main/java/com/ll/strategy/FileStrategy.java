@@ -15,21 +15,13 @@ public class FileStrategy {
     }
 
     public <T> void saveFile(String fileName, T saying) {
-        template(new MangeFile() {
-            @Override
-            public void doSomeThing(String formattedFileName) throws IOException {
-                objectsMapper.writeValue(new File(formattedFileName), saying);
-            }
-        }, fileName);
+        template(formattedFileName ->
+                objectsMapper.writeValue(new File(formattedFileName), saying), fileName);
     }
 
     public void deleteFile(String fileName) {
-        template(new MangeFile() {
-            @Override
-            public void doSomeThing(String formattedFileName) throws IOException {
-                Files.delete(Path.of(formattedFileName));
-            }
-        }, fileName);
+        template(formattedFileName ->
+                Files.delete(Path.of(formattedFileName)), fileName);
     }
 
     private void template(MangeFile mangeFile, String fileName){
@@ -39,6 +31,5 @@ public class FileStrategy {
         }catch (IOException e){
             throw new RuntimeException(e);
         }
-
     }
 }
